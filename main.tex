@@ -1,14 +1,13 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+%#!uplatex
 
-\title{k-tex-template}
-\author{shinya oguri}
-\date{March 2026}
+\documentclass[a4paper,dvipdfmx,uplatex,twocolumn]{jsarticle} % レジュメ用クラス
+
+\usepackage{style/resume}   % レジュメ用スタイル
+% \usepackage{style/thesis} % 卒論用スタイル
 
 \begin{document}
+    \ThisIsDraft % 下書きの時はこれをつけるとバージョン管理ができます
 
-\maketitle
-
-\section{Introduction}
+    \include{resume/example}
 
 \end{document}
