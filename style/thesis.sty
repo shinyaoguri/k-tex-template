@@ -84,6 +84,12 @@
   \def\@supervisor{#1}%
 }
 
+% サブタイトルを保存するための内部変数
+\def\@subtitle{}%
+\newcommand{\subtitle}[1]{%
+  \def\@subtitle{#1}%
+}
+
 % 複数著者を \and でつなぐときに、改行ではなく横に並べる
 \def\and{\unskip\hspace{2em}} % 間隔は好みで調整
 \renewcommand{\maketitle}{%
@@ -91,6 +97,10 @@
     \begin{center}%
       \vspace*{-10mm}% タイトルを少し上に
       {\LARGE\bfseries\gtfamily \@title \par}%
+      \ifx\@subtitle\empty\else
+        \vspace{0.3em}%
+        {\large\gtfamily \@subtitle \par}%
+      \fi
       \vspace{0.8em}%
       {\large \@author \par}%
       {\normalsize \textbf{指導教員}\ \@supervisor \par}%
