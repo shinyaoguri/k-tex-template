@@ -126,8 +126,18 @@
 % 下書きの時にバージョン情報と透かしを出すようにする
 \newcommand{\ThisIsDraft}{%
     \pagestyle{plain}%
+    % DRAFT透かし（最背面に配置）
+    \AddToShipoutPictureBG{%
+      \AtPageCenter{%
+        \rotatebox{45}{%
+          \textcolor{red!15}{%
+            \sffamily\bfseries\fontsize{80pt}{80pt}\selectfont DRAFT%
+          }%
+        }%
+      }%
+    }%
+    % バージョン情報（最前面に配置）
     \AddToShipoutPictureFG{%
-      % 左上にバージョン情報
       \AtPageUpperLeft{%
         \hspace*{10mm}%
         \raisebox{-10mm}[0pt][0pt]{%
@@ -139,17 +149,6 @@
           \ifthenelse{\hour<10}{0\number\the\hour}{\number\the\hour}%
           \ifthenelse{\minute<10}{0\the\minute}{\the\minute}%
         }%
-        }%
-      }%
-      % 右上にDRAFT透かし
-      \AtPageUpperLeft{%
-        \hspace*{\dimexpr\paperwidth-35mm\relax}%
-        \raisebox{-18mm}[0pt][0pt]{%
-          \rotatebox{-30}{%
-            \textcolor{gray!30}{%
-              \sffamily\bfseries\fontsize{24pt}{24pt}\selectfont DRAFT%
-            }%
-          }%
         }%
       }%
     }%
