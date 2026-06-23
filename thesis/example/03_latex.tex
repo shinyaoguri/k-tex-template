@@ -1,0 +1,202 @@
+\chapter{文章作成のための\LaTeX 記法}
+\label{chap:latex}
+
+本章と次章では，論文の執筆に必要な\LaTeX の記法を，さまざまなパターンとともに丁寧に示す．
+各項目では，可能な限り実際の出力と対応するソースコードを併記する．
+本章では文章を組み立てるための基本的な記法を，
+第\ref{chap:float}章では図・表・数式・ソースコードの記法を扱う．
+
+%% ===========================================================
+\section{文書の構造と見出し}
+\label{sec:sectioning}
+論文の見出しは，以下の階層で構成する．数字が小さいほど上位の見出しである．
+
+\begin{enumerate}[label=\arabic*., leftmargin=*]
+    \item \verb|\chapter{...}|：章（本テンプレートの最上位）
+    \item \verb|\section{...}|：節
+    \item \verb|\subsection{...}|：小節
+    \item \verb|\subsubsection{...}|：小々節
+    \item \verb|\paragraph{...}|：段落見出し（番号なし・行内）
+\end{enumerate}
+
+見出しに\verb|*|を付けると番号が振られず，目次にも載らない（例：\verb|\section*{...}|）．
+「はじめに」や「謝辞」など，番号を付けたくない見出しに用いる．
+番号を付ける深さは\verb|secnumdepth|，目次に載せる深さは\verb|tocdepth|カウンタで調整できる．
+
+\begin{lstlisting}[language={[LaTeX]TeX}, numbers=none, frame=single]
+\setcounter{secnumdepth}{2} % subsection まで番号を振る
+\setcounter{tocdepth}{2}    % subsection まで目次に載せる
+\end{lstlisting}
+
+%% ===========================================================
+\section{相互参照}
+\label{sec:crossref}
+見出し・図・表・式などに\verb|\label{key}|を付けておくと，
+\verb|\ref{key}|で番号を，\verb|\pageref{key}|でページ番号を参照できる．
+番号を手書きする必要がなくなり，順序が変わっても自動で更新される．
+
+\begin{table}[htbp]
+    \centering
+    \caption{主な参照コマンド}
+    \label{tab:refcmd}
+    \begin{tabular}{ll}\toprule
+        コマンド & 用途 \\ \midrule
+        \verb|\ref{key}|     & 章・節・図・表・式などの番号 \\
+        \verb|\pageref{key}| & 対象があるページ番号 \\
+        \verb|\eqref{key}|   & 式番号（括弧付き，例：(\ref{eq:dummy})） \\
+        \verb|\autoref{key}| & 種別付きの参照（hyperref，例：「図1」） \\
+        \verb|\label{key}|   & 参照先に目印を付ける \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{equation}\label{eq:dummy} E = mc^2 \end{equation}
+
+ラベルのキーには，種別を表す接頭辞を付けると管理しやすい
+（章：\verb|chap:|，節：\verb|sec:|，図：\verb|fig:|，表：\verb|tab:|，式：\verb|eq:|，コード：\verb|lst:|）．
+たとえば本節（第\ref{sec:crossref}節）は\pageref{sec:crossref}ページにあり，式は\eqref{eq:dummy}である．
+
+%% ===========================================================
+\section{文字の書体と装飾}
+\label{sec:fontstyle}
+文字の見た目は表\ref{tab:fontstyle}のコマンドで変更できる．
+論文では装飾を多用せず，強調は\verb|\textbf{}|か\verb|\emph{}|に絞るのがよい．
+
+\begin{table}[htbp]
+    \centering
+    \caption{書体・装飾のコマンド}
+    \label{tab:fontstyle}
+    \begin{tabular}{lll}\toprule
+        コマンド & 出力 & 用途 \\ \midrule
+        \verb|\textbf{...}|  & \textbf{太字}            & 強調 \\
+        \verb|\textit{...}|  & \textit{italic}          & 欧文の斜体 \\
+        \verb|\emph{...}|    & \emph{強調}              & 文脈に応じた強調 \\
+        \verb|\texttt{...}|  & \texttt{typewriter}      & 等幅（コード等） \\
+        \verb|\textsf{...}|  & \textsf{sans serif}      & サンセリフ \\
+        \verb|\underline{}|  & \underline{下線}         & 下線 \\
+        \verb|{\gtfamily }|  & {\gtfamily ゴシック体}   & 和文ゴシック \\
+        \verb|{\mcfamily }|  & {\mcfamily 明朝体}       & 和文明朝 \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+文字サイズは\verb|\tiny|，\verb|\small|，\verb|\normalsize|，\verb|\large|，
+\verb|\Large|，\verb|\huge|の順に大きくなる（例：{\large 大きめ}，{\small 小さめ}）．
+これらは宣言型なので，\verb|{\large ... }|のように波括弧で範囲を限定する．
+
+%% ===========================================================
+\section{空白・改行・改ページ}
+\label{sec:spacing}
+\LaTeX では，ソース中の単語間の複数の空白や単独の改行は，1つの空白として扱われる．
+空行を入れると段落の区切り（改段落）になる．主な制御コマンドを以下に示す．
+
+\begin{description}[leftmargin=*, style=nextline]
+    \item[\texttt{\textbackslash\textbackslash}\ または\ \texttt{\textbackslash newline}] 段落内で強制改行する（多用は避ける）．
+    \item[\texttt{\textbackslash par}\ または空行] 段落を改める．
+    \item[\texttt{\textbackslash noindent}] 段落先頭の字下げを無くす．
+    \item[\texttt{\textbackslash newpage},\ \texttt{\textbackslash clearpage}] 改ページする（\verb|\clearpage|は未処理の図表も出力する）．
+    \item[\texttt{\textbackslash quad},\ \texttt{\textbackslash qquad}] 全角1文字・2文字分の水平空白を入れる．
+    \item[\texttt{\textbackslash hspace\{1cm\}},\ \texttt{\textbackslash vspace\{1cm\}}] 任意の幅・高さの空白を入れる．
+\end{description}
+
+文字間に\verb|~|を書くと改行されない空白（ノーブレークスペース）になり，
+「図~1」のように番号と語句が行末で泣き別れになるのを防げる．
+
+%% ===========================================================
+\section{特殊文字と記号}
+\label{sec:special}
+\LaTeX で特別な意味を持つ文字は，そのまま書くとエラーになるためエスケープが必要である（表\ref{tab:special}）．
+
+\begin{table}[htbp]
+    \centering
+    \caption{特殊文字の入力方法}
+    \label{tab:special}
+    \begin{tabular}{cl@{\qquad}cl}\toprule
+        出力 & 入力 & 出力 & 入力 \\ \midrule
+        \% & \verb|\%|  & \&         & \verb|\&| \\
+        \$ & \verb|\$|  & \#         & \verb|\#| \\
+        \_ & \verb|\_|  & \{\ \}     & \verb|\{ \}| \\
+        \textasciitilde & \verb|\textasciitilde| & \textasciicircum & \verb|\textasciicircum| \\
+        \textbackslash  & \verb|\textbackslash|  & \ldots           & \verb|\ldots| \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+ハイフンには3種類ある：ハイフン（-，\verb|-|），
+半角ダッシュ（--，\verb|--|，範囲を表す），全角ダッシュ（---，\verb|---|，欧文の挿入句）．
+欧文の引用符は，開きに\verb|``|，閉じに\verb|''|を用いる（``例''）．
+
+%% ===========================================================
+\section{箇条書き}
+\label{sec:lists}
+箇条書きには\texttt{itemize}（記号），\texttt{enumerate}（番号），
+\texttt{description}（見出し付き）の3種類がある．これらは入れ子にできる．
+
+\begin{itemize}
+    \item itemize は記号付き
+    \begin{itemize}
+        \item 入れ子にすると記号が変わる
+        \begin{itemize}
+            \item さらに入れ子にもできる
+        \end{itemize}
+    \end{itemize}
+    \item enumerate は番号付き
+\end{itemize}
+
+\texttt{enumitem}パッケージを使うと，番号やラベルの書式・余白を細かく変更できる．
+
+\begin{enumerate}[label=(\arabic*), leftmargin=*]
+    \item \verb|label=(\arabic*)| で (1) (2) の形式になる
+    \item \verb|\alph*| なら a, b，\verb|\roman*| なら i, ii になる
+\end{enumerate}
+
+項目を横に並べるインラインリストも作れる：%
+\begin{enumerate*}[label=(\arabic*)]
+    \item 第一に \item 第二に \item 第三に
+\end{enumerate*}．
+
+\begin{description}[leftmargin=*]
+    \item[用語] description は，このように用語とその説明を並べるのに適している．
+\end{description}
+
+%% ===========================================================
+\section{脚注と欄外メモ}
+\label{sec:footnote}
+補足的な情報は脚注\footnote{このように\texttt{\textbackslash footnote\{\}}で脚注を付けられる．脚注番号は自動で振られる．}にすると本文が読みやすくなる．
+執筆中のメモには\texttt{todonotes}が便利で，短いメモは\verb|\todo{...}|で欄外に表示できる\todo{図を追加}．
+長いメモは\verb|\todo[inline]{...}|を使うと本文幅で表示され読みやすい．
+\verb|\listoftodos|でメモの一覧を出力でき，提出前の消し忘れ確認に役立つ．
+
+%% ===========================================================
+\section{引用ブロックと整形済みテキスト}
+\label{sec:quote}
+他者の文章を短く引用する場合は\texttt{quote}環境を，
+複数段落にわたる場合は\texttt{quotation}環境を用いる．
+
+\begin{quote}
+    良い文章を書くには，まず読み手のことを考えることが大切である\cite{kisaragi}．
+\end{quote}
+
+入力した通りに（\LaTeX のコマンドを解釈せず）出力したい場合は\texttt{verbatim}環境や，
+行内では\verb|\verb|コマンドを用いる．本章でコマンド名を示すのに使っているのがこれである．
+
+%% ===========================================================
+\section{引用と参考文献}
+\label{sec:reference}
+本文中で文献を引用するには\verb|\cite{キー}|を用いる（例：文献\cite{lamport}）．
+複数の文献はカンマで区切ってまとめて引用できる（例：文献\cite{tex,kisaragi,companion}）．
+参考文献リストには，原則として本文中で引用した文献のみを列挙する．
+
+参考文献の記述には，\texttt{thebibliography}環境に直接書く方法と，BibTeXを用いる方法がある．
+本テンプレートでは\texttt{thesis.tex}末尾の\texttt{thebibliography}環境に記述している．
+
+\begin{lstlisting}[language={[LaTeX]TeX}, numbers=none, frame=single]
+\begin{thebibliography}{99}
+\bibitem{lamport} L. Lamport, ``LaTeX: A Document ...'', 1994.
+\end{thebibliography}
+\end{lstlisting}
+
+文献数が多い場合は，BibTeX用の文献データベース（\texttt{.bib}ファイル）を用意し，
+\verb|\bibliography{ファイル名}|で読み込むと，引用した文献だけが自動で整形・並び替えされる．
+
+URLを記載する場合は\verb|\url{}|を用いる．自動で等幅フォントになり，
+適切な位置で改行されるため，はみ出し（overfull）を防げる
+（例：\url{https://www.ipsj.or.jp/journal/submit/style.html}）．
+Webページを参照する場合は最終アクセス日を記載し，可能な限り論文誌や書籍を優先して引用する．

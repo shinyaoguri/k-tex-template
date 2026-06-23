@@ -1,13 +1,62 @@
 %#!uplatex
 
-\documentclass[a4paper,dvipdfmx,uplatex,twocolumn]{jsarticle} % レジュメ用クラス
+\documentclass[a4paper,dvipdfmx,openany,uplatex,report]{jsbook} % 卒論用クラス
 
 \usepackage{style/thesis} % 卒論用スタイル
+
+% ----------
+% 基本情報
+% ----------
+\thesistype{卒業論文}                              % 論文種別
+\title{卒業論文のテンプレートと書き方ガイド}          % タイトル
+\subtitle{}                                       % サブタイトル（不要なら空のまま）
+\author{X12345\quad 愛工太郎}                       % 著者（学籍番号 氏名）
+\supervisor{小栗真弥}                               % 指導教員
+\affiliation{愛知工業大学\quad 情報科学部\quad 情報科学科} % 所属
+\date{2026年3月}                                   % 提出年月
+
+% ----------
 
 \begin{document}
     \ThisIsDraft % 下書きの時はこれをつけるとバージョン管理ができます
 
-    \include{thesis/example/example}
-    % \include{thesis/example/your-thesis}
-    
+    % ===== 前付け（表紙・目次） =====
+    \frontmatter
+    \maketitle
+    \tableofcontents
+    \listoffigures
+    % \listoftables
+    % \listoftodos
+
+    % ===== 本文 =====
+    \mainmatter
+    \include{thesis/example/01_intro}
+    \include{thesis/example/02_writing}
+    \include{thesis/example/03_latex}
+    \include{thesis/example/04_float}
+    \include{thesis/example/05_conclusion}
+    % \include{thesis/your-thesis/01_intro} % 自分の論文はこちらに用意する
+
+    % ===== 後付け（参考文献） =====
+    \backmatter
+    % BibTeXを使う場合は thebibliography の代わりに次の2行を使う
+    % \bibliographystyle{junsrt}
+    % \bibliography{thesis/reference}
+    \begin{thebibliography}{99}
+        \bibitem{lamport}
+        L. Lamport, ``\LaTeX: A Document Preparation System'', Addison-Wesley, 2nd edition, 1994.
+
+        \bibitem{tex}
+        奥村晴彦, 黒木祐介, ``改訂第9版 \LaTeXe 美文書作成入門'', 技術評論社, 2023.
+
+        \bibitem{kisaragi}
+        木下是雄, ``理科系の作文技術'', 中公新書, 1981.
+
+        \bibitem{companion}
+        F. Mittelbach, U. Fischer, ``The \LaTeX\ Companion'', Addison-Wesley, 3rd edition, 2023.
+
+        \bibitem{ipsj-sample}
+        情報処理学会論文誌ジャーナル編集委員会, ``情報処理学会論文誌ジャーナル論文の準備方法'', \url{https://www.ipsj.or.jp/journal/submit/style.html}, 参照 2026-01-15.
+    \end{thebibliography}
+
 \end{document}
