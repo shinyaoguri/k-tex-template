@@ -17,6 +17,10 @@
 *.nav
 *.snm
 *.vrb
+*.loa
+*.lol
+*.tdo
+*.synctex(busy)
 
 # Build output
 *.pdf
