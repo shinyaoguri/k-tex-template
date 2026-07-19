@@ -13,7 +13,7 @@ $ENV{'TZ'}='Asia/Tokyo';
 if ($^O eq 'linux') {
     $ENV{OPENTYPEFONTS} = '/usr/share/fonts//:';
     $ENV{TTFONTS} = '/usr/share/fonts//:';
-} elsif ($^O eq 'Darwin') {
+} elsif ($^O eq 'darwin') {
     $pdf_previewer = "open %S";
     $ENV{OPENTYPEFONTS} = '/usr/local/texlive/texmf-local/fonts//:';
     $ENV{TTFONTS} = '/usr/local/texlive/texmf-local/fonts//:';
