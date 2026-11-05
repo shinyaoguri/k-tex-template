@@ -9,11 +9,15 @@
 #   make help         ターゲット一覧を表示
 #
 #   卒論をビルドする場合: make docker TARGET=thesis.tex
-#   イメージ差し替え:     make docker IMAGE=texlive/texlive:TL2025-historic
+#   イメージ差し替え:     make docker IMAGE=texlive/texlive:latest
 # ==============================================================
 
 TARGET ?= main.tex
-IMAGE  ?= texlive/texlive:latest
+# TeX Live のイメージは年度版に固定する（latest は毎週更新され，年度途中で
+# ビルドが壊れたり，引いた時期で PDF が変わったりするため）．
+# 運用: 毎年，新年度が始まる前に凍結済みの最新年度（TLyyyy-historic）へ上げ，
+# README のコマンド例と .github/workflows のイメージも同じタグに揃える．
+IMAGE  ?= texlive/texlive:TL2025-historic
 
 # Linux ホストの Docker では生成物が root 所有になるため UID/GID を合わせる
 # （macOS の Docker Desktop / Apple コンテナではホストユーザーに揃うので不要だが無害）
