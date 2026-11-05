@@ -162,10 +162,10 @@ make docker
 `make docker`は次のコマンドの省略形です（`make`が使えない環境ではこちらを直接実行してもOK）．
 
 ```
-docker run --rm -v "$PWD:/workdir" -w /workdir texlive/texlive:latest latexmk main.tex
+docker run --rm -v "$PWD:/workdir" -w /workdir texlive/texlive:TL2025-historic latexmk main.tex
 ```
 
-イメージは週次で更新されているので，たまに `docker pull texlive/texlive:latest` で更新するとよいです．
+年度の途中でパッケージ更新によりビルドが壊れないよう，イメージは年度版（`TL2025-historic`）に固定しています．テンプレートの管理者が新年度の前にタグを上げるので，学生がイメージを更新する必要はありません（テンプレートを新しくしたときは `make docker` が新しいイメージを自動でダウンロードします）．
 
 ## 方法4:Appleコンテナで書く
 
@@ -193,10 +193,10 @@ make container
 初回はイメージのダウンロードで数分待ちます．`make container`は次のコマンドの省略形です．
 
 ```
-container run --rm -v "$PWD:/workdir" -w /workdir texlive/texlive:latest latexmk main.tex
+container run --rm -v "$PWD:/workdir" -w /workdir texlive/texlive:TL2025-historic latexmk main.tex
 ```
 
-メモリ不足でコンパイルに失敗する場合は，上のコマンドに `--memory 2g` を付けて実行してみてください．イメージの更新は `container images pull texlive/texlive:latest` です．
+メモリ不足でコンパイルに失敗する場合は，上のコマンドに `--memory 2g` を付けて実行してみてください．イメージは方法3と同じく年度版に固定しています．
 
 ## レジュメを書き始める
 
