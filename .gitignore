@@ -22,8 +22,8 @@
 *.tdo
 *.synctex(busy)
 
-# Build output
-*.pdf
+# Build output（ルート直下の main.pdf / thesis.pdf だけ。figures 等に置いた図の PDF は追跡する）
+/*.pdf
 
 # macOS
 .DS_Store
