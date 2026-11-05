@@ -33,9 +33,10 @@
 \label{subsec:basic}
 用途に応じてコンパイルの起点となるファイルが異なる．
 \begin{itemize}
-    \item レジュメ用：\texttt{main.tex}（\texttt{jsarticle}クラス＋\verb|\usepackage{style/resume}|）
-    \item 卒論用：\texttt{thesis.tex}（\texttt{jsbook}クラス＋\verb|\usepackage{style/thesis}|．記述例は\texttt{thesis/example/}を参照）
+    \item レジュメ用：\texttt{main.tex}（\texttt{jsarticle}＋\texttt{style/resume}）
+    \item 卒論用：\texttt{thesis.tex}（\texttt{jsbook}＋\texttt{style/thesis}）
 \end{itemize}
+卒論の記述例は\texttt{thesis/example/}にある．
 卒論用スタイルは章（\verb|\chapter|）を使うため\texttt{jsbook}クラスが必要であり，\texttt{main.tex}のスタイルだけを差し替えてもコンパイルできない．
 卒論をコンパイルするときは\texttt{latexmk thesis.tex}のようにファイル名を指定する．
 
