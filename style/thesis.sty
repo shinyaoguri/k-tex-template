@@ -35,7 +35,7 @@
 \usepackage{amsmath,amssymb}    % 数式・各種記号
 \usepackage{amsthm}             % 定理・定義などの環境
 \usepackage{graphicx}           % 画像の挿入
-\usepackage{here}               % 図表の位置指定（H）
+\usepackage{float}              % 図表の位置指定（[H]）
 \usepackage{ascmac}             % 枠囲み（itembox等）
 
 %% ===== 章・見出しの装飾 =====
@@ -43,7 +43,7 @@
 
 %% ===== 色 =====
 \@ifpackageloaded{xcolor}{}{%
-  \usepackage[usenames,dvipsnames,table,xcdraw]{xcolor}%
+  \usepackage[dvipsnames,table,xcdraw]{xcolor}%
 }
 
 %% ===== 表関連 =====

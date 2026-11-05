@@ -36,13 +36,14 @@
 \usepackage{lscape}             % 表などを90度回転させるやつ
 \usepackage{xtab}               % ページをまたぐ大きな表の表示
 %% 図関連
+\usepackage{graphicx}           % 画像の挿入
 \@ifpackageloaded{xcolor}{}{%
   \usepackage[dvipsnames,table,xcdraw]{xcolor}%
 }
-\usepackage{here}               % 図の位置を指定
+\usepackage{float}              % 図表の位置指定（[H]）
 \usepackage{pdfpages}           % PDFを挿入する
 \usepackage{pgfplots}           % GNUPlot
-\pgfplotsset{compat=1.12}       % バージョン指定
+\pgfplotsset{compat=1.18}       % バージョン指定
 \usepackage{tcolorbox}          % 色付きの枠
 \tcbuselibrary{raster,skins,breakable,theorems}
 \usepackage{tikz}               % 作図
@@ -52,8 +53,8 @@
 \usepackage{lipsum}             % ダミー文章生成
 %% その他
 \usepackage{xurl}               % URLの表示（urlの拡張，改行位置を増やす）
-\usepackage{algorithmic}        % 擬似コード
-\usepackage{algorithm}          % 擬似コード
+\usepackage{algorithm}          % アルゴリズムのフロート
+\usepackage[noend]{algpseudocode} % 擬似コード
 \usepackage[subrefformat=parens]{subcaption} % サブキャプション
 \usepackage{listings,jvlisting}           % ソースコードの出力
 \lstset{language=c,
@@ -70,14 +71,15 @@
     tabsize=2,
     breaklines=true,
 }
-\usepackage[dvipdfmx]{hyperref} % ハイパーリンク
+\usepackage[dvipdfmx,hidelinks]{hyperref} % ハイパーリンク
 \usepackage[otfcid,otfmacros]{pxjahyper} % ハイパーリンク
 
 % ----------
 
 \makeatletter
 
-% 行間を15%縮める
+% 行間を15%縮める（2段組みのレジュメをページ数制限に収めるため．
+% 読みにくければ 0.9〜1.0 に上げてよい）
 \AtBeginDocument{\renewcommand{\baselinestretch}{0.85}\normalsize}
 
 % 指導教員名を保存するための内部変数
@@ -105,7 +107,9 @@
       \fi
       \vspace{0.8em}%
       {\large \@author \par}%
-      {\normalsize \textbf{指導教員}\ \@supervisor \par}%
+      \ifx\@supervisor\empty\else
+        {\normalsize \textbf{指導教員}\ \@supervisor \par}%
+      \fi
     \end{center}%
   ]%
 }
