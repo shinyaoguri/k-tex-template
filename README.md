@@ -37,7 +37,7 @@
 | [方法3:Docker](#方法3dockerで書く) | PCの環境を汚したくない，Dockerを使ったことがある | LaTeX本体のインストール不要．イメージ約8GB |
 | [方法4:Appleコンテナ](#方法4appleコンテナで書く) | Docker Desktopを入れたくない | macOS 26以降・Apple Silicon限定（実験的） |
 
-どれを選んでも同じPDFが作れます．迷ったらOverleafで始めて，慣れてきたら他の方法に移るのがおすすめです．
+どれを選んでもほぼ同じPDFが作れます（TeX Liveのバージョンが環境ごとに少し違うため，細かな組版が変わることはあります）．迷ったらOverleafで始めて，慣れてきたら他の方法に移るのがおすすめです．
 
 ## 準備:テンプレートを手に入れる
 
@@ -293,6 +293,8 @@ make TARGET=thesis.tex      # makeを使う場合（docker/containerでも同様
 | `make watch` | 保存のたびに自動再コンパイル（ローカル専用．Ctrl+Cで停止） |
 | `make clean` | 中間ファイルを削除（PDFは残す） |
 | `make distclean` | PDFも含めて生成物をすべて削除 |
+| `make docker-clean` | ローカルにTeXが無い場合に，Docker経由で中間ファイルを削除 |
+| `make container-clean` | ローカルにTeXが無い場合に，Appleコンテナ経由で中間ファイルを削除 |
 
 どのコマンドも `TARGET=` を付けると対象を切り替えられます（例: `make docker TARGET=thesis.tex`）．
 
